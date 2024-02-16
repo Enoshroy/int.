@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Form</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #d3c5c6 0%, #ffc371 100%);
+    }
+  
+    .form-container {
+      width: 50%;
+      height: 70%;
+      margin: 10% auto;
+      padding: 40px;
+      background: linear-gradient(135deg, #ced1c1 0%, #f0f0f0 100%);
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+  
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+  
+    .form-group {
+      margin-bottom: 30px;
+    }
+  
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      color: #555;
+      margin-bottom: 5px;
+    }
+  
+    .form-group input {
+      width: calc(100% - 22px);
+      padding: 10px;
+      border: 1px solid #e2d9d9;
+      border-radius: 5px;
+      outline: none;
+    }
+  
+    button {
+      width: calc(100% - 22px);
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      outline: none;
+    }
+  
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .success-message {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background-color: #4caf50;
+      color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1><marquee>Please fill the details in the given form</marquee></h1>
+  <div class="form-container">
+    <h2>Contact Form</h2>
+    <form (submit)="onSubmit()">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required [(ngModel)]="name">
+  </div>
+  <div class="form-group">
+    <label for="phone">Phone Number:</label>
+    <input type="tel" id="phone" name="phone" required [(ngModel)]="phoneNumber">
+  </div>
+  <div class="form-group">
+    <label for="email">Email Address:</label>
+    <input type="email" id="email" name="email" required [(ngModel)]="email">
+  </div>
+  <button type="submit">Submit</button>
+</form>
+
+  </div>
+
+  <div id="successMessage" class="success-message">Form submitted successfully!</div>
+
+  <script>
+    const form = document.getElementById('contactForm');
+    const successMessage = document.getElementById('successMessage');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Validate phone number format (10 digits)
+      const phoneInput = document.getElementById('phone');
+      const phoneRegex = /^\d{10}$/;
+      if (!phoneRegex.test(phoneInput.value)) {
+        alert('Please enter a valid phone number (10 digits).');
+        return;
+      }
+
+      // Validate email format
+      const emailInput = document.getElementById('email');
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(emailInput.value)) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+
+      // If all validations pass, show success message
+      successMessage.style.display = 'block';
+
+      // Hide success message after 3 seconds
+      setTimeout(() => {
+        successMessage.style.display = 'none';
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
